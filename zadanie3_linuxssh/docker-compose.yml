@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+    zad3_ssh_deb:
+        image: zad3_ssh_deb
+        build: .
+        ports:
+            - 2022:22

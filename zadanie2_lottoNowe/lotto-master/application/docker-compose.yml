@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+    
+    lotto:
+        image: lotto-app
+        build: .
+        ports:
+            - 8080:8080
+        environment:
+            DB_HOST: postgres_lotto
+            DATABASE: lbaza
+            DBUSER: luser
+            DBPASSWORD: lhaslo
+            spring.profiles.active: local
+    
+    postgres_lotto:
+        image: postgres:14.4
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_PASSWORD: lhaslo
+            POSTGRES_USER: luser
+            POSTGRES_DB: lbaza
+    
+    localstack:
+        image: localstack/localstack:0.12.12
+        ports:
+          - 4566:4566
+        environment:
+          - SERVICES=s3,lambda,serverless,sqs
+          - AWS_DEFAULT_REGION=eu-central-1
+          - EDGE_PORT=4566
+          - DOCKER_HOST=unix:///var/run/docker.sock
+    
+        
